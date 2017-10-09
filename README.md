@@ -12,5 +12,6 @@ Wczytac od uzytkownika liczbe n. Wczytac od uzytkownika liste n imion i nazwisk 
 Wyswietlic "menu":
 - Sortowanie wg imion
 - Sortowanie wg nazwisk
+
 Wczytaj od uzytkownika wybor (1 lub 2) i wyswietlic odpowiednio posortowana
 liste.
