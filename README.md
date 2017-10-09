@@ -10,7 +10,7 @@ odpowiedzi program informuje o tym i konczy dzialanie (Nie pyta dalej!).
 
 Wczytac od uzytkownika liczbe n. Wczytac od uzytkownika liste n imion i nazwisk (w jednej lini imie i nazwisko).
 Wyswietlic "menu":
-1 - Sortowanie wg imion
-2 - Sortowanie wg nazwisk
+- Sortowanie wg imion
+- Sortowanie wg nazwisk
 Wczytaj od uzytkownika wybor (1 lub 2) i wyswietlic odpowiednio posortowana
 liste.
