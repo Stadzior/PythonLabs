@@ -18,4 +18,4 @@ while x != "q":
         if x == "2":
             sortedPersons = sorted(persons, key=lambda person: person[1])
     for person in sortedPersons:
-        print(person)
+        print('{} {}'.format(person[0],person[1])
