@@ -15,3 +15,14 @@ Wyswietlic "menu":
 
 Wczytaj od uzytkownika wybor (1 lub 2) i wyswietlic odpowiednio posortowana
 liste.
+
+## Zadanie3
+
+Na bazie zadania 2 dodac do skryptu mozliwosc obslugi "bazy danych" w pliku.
+Skrypt powinien obslugiwac:
+1) Ladowanie "bazy danych" z pliku o okreslonej nazwie.
+2) Zapisywanie "bazy danych" do pliku o okreslonej nazwie.
+3) Dodawanie nowych wpisow do "bazy danych".
+4) Usuwanie wpisow z "bazy danych".
+5) Wyswietlanie zawartosci "bazy danych".
+6) Wyswietlanie listy "opcji"
