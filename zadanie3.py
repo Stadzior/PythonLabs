@@ -4,7 +4,7 @@ import npyscreen
 class TestApp(npyscreen.NPSAppManaged):
 
 	def onStart(self):
-		self.addForm("MAIN", MainForm, name = "Zadanie 1",)
+		self.addForm("MAIN", MainForm, name = "Zadanie 3",)
 
 class MainForm(npyscreen.ActionForm):
 
@@ -12,7 +12,7 @@ class MainForm(npyscreen.ActionForm):
 	ms = None
 
 	def create(self):
-		self.ms = self.add(npyscreen.TitleSelectOne, max_height=4, value = [0,], name="Sortowanie wedlug", values = ["Imion","Nazwisk",], scroll_exit=True)
+		self.ms = self.add(npyscreen.TitleSelectOne, max_height=7, value = [0,], name="Wybierz opcje:", values = ["Laduj baze z pliku","Zapisz baze do pliku", "Dodaj nowy wpis do bazy", "Usun wpis z bazy", "Wyswietl zawartosc bazy"], scroll_exit=True)
 		self.add(npyscreen.FixedText, value = """Wpisz liste imion i nazwisko oddzielonych przecinkiem!\n""")
 		self.ml = self.add(npyscreen.MultiLineEdit, max_height=5, rely=9)
 	
@@ -33,7 +33,6 @@ class MainForm(npyscreen.ActionForm):
 			value = value.strip()
 			value = value.split(" ")
 			newList.append(value)
-
 		return newList
 
 	def buildMessageString(self, names):
