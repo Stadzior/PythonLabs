@@ -12,7 +12,6 @@ class MainForm(npyscreen.ActionForm):
 	ms = None
 	db = None
 	gd = None
-
 	def create(self):
 		self.ms = self.add(npyscreen.TitleSelectOne, max_height=7, value = [0,], name="Wybierz opcje:", values = ["Laduj baze z pliku","Zapisz baze do pliku", "Dodaj nowy wpis do bazy", "Usun wpis z bazy"], scroll_exit=True)
 		self.gd = self.add(npyscreen.GridColTitles, relx = 20, rely=10, width=50, col_titles = ['Imie', 'Nazwisko'])
@@ -35,15 +34,8 @@ class MainForm(npyscreen.ActionForm):
 				npyscreen.notify_confirm("Zapis bazy do pliku nie powiodl sie.\n\n{}".format(str(e)), title="Blad zapisu bazy")
 		elif self.ms.value[0] == 2:
 			self.parentApp.switchForm('ADD')
-
 		elif self.ms.value[0] == 3:
 			self.parentApp.switchForm('REMOVE')
-
-#			selectedRowIndex = self.gd.edit_cell[0]
-#			deletionConfirmed = npyscreen.notify_ok_cancel("Jestes pewny, ze chcesz usunac {} {} z bazy?".format(self.db[selectedRowIndex][0],self.db[selectedRowIndex][1]), title='Usuwanie wpisu z bazy')
-#			if deletionConfirmed:
-#				self.db.pop(selectedRowIndex)	
-#				self.refresh_grid()
 	def on_cancel(self):
 		exit()
 	
@@ -59,7 +51,13 @@ class AddRecordForm(npyscreen.ActionPopup):
 #	def create(self):
 #		self.ms = self.add(npyscreen.TitleSelectOne, max_height=7, value = [0,], name="Wybierz rekord:", values = records, #scroll_exit=True)
 	def on_ok(self):
-		#self.parentApp.getForm('MAIN').wgName.value = self.myName.value
+		mainForm = self.parentApp.getForm('MAIN')
+		row = ["Jane","Plain"]
+		if len(row[0]) > 0 or len(row[1]) > 0:
+			mainForm.db.append(row)
+			mainForm.refresh_grid()
+		else:
+			npyscreen.notify_confirm("Nie ma czego zapisac.", title="Blad dodawania rekordu")
 		self.parentApp.switchFormPrevious();
 	def on_cancel(self):
 		self.parentApp.switchFormPrevious();
@@ -70,7 +68,13 @@ class RemoveRecordForm(npyscreen.ActionPopup):
 	def create(self):
 		self.ms = self.add(npyscreen.TitleSelectOne, max_height=7, value = [0,], name="Wybierz rekord:", values = ['A','B','C'], scroll_exit=True)
 	def on_ok(self):
-		#self.parentApp.getForm('MAIN').wgName.value = self.myName.value
+		mainForm = self.parentApp.getForm('MAIN')
+		selectedRowIndex = self.ms.value[0]
+		if selectedRowIndex > -1:
+			mainForm.db.pop(selectedRowIndex)
+			mainForm.refresh_grid()
+		else:
+			npyscreen.notify_confirm("Nie wybrano zadnego rekordu", title="Blad usuwania rekordu")
 		self.parentApp.switchFormPrevious();
 	def on_cancel(self):
 		self.parentApp.switchFormPrevious();
