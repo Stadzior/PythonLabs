@@ -35,6 +35,7 @@ class MainForm(npyscreen.ActionForm):
 		elif self.ms.value[0] == 2:
 			self.parentApp.switchForm('ADD')
 		elif self.ms.value[0] == 3:
+			self.parentApp.getForm('REMOVE').ms.values = ['{} {}'.format(row[0],row[1]) for row in self.db] 
 			self.parentApp.switchForm('REMOVE')
 	def on_cancel(self):
 		exit()
@@ -46,16 +47,22 @@ class MainForm(npyscreen.ActionForm):
 		self.gd.hidden = len(self.gd.values) == 0
 
 class AddRecordForm(npyscreen.ActionPopup):
-#	ms = None
+	nameTextEdit = None
+	surnameTextEdit = None
 
-#	def create(self):
-#		self.ms = self.add(npyscreen.TitleSelectOne, max_height=7, value = [0,], name="Wybierz rekord:", values = records, #scroll_exit=True)
+	def create(self):
+		self.add(npyscreen.FixedText, value = "Imie:\n", rely=1)
+		self.nameTextEdit = self.add(npyscreen.MultiLineEdit, max_height=5, rely=2)
+		self.add(npyscreen.FixedText, value = "Nazwisko:\n",rely=3)
+		self.surnameTextEdit = self.add(npyscreen.MultiLineEdit, max_height=5, rely=4)
 	def on_ok(self):
 		mainForm = self.parentApp.getForm('MAIN')
-		row = ["Jane","Plain"]
+		row = [self.nameTextEdit.value, self.surnameTextEdit.value]
 		if len(row[0]) > 0 or len(row[1]) > 0:
 			mainForm.db.append(row)
 			mainForm.refresh_grid()
+			self.nameTextEdit.value = ""
+			self.surnameTextEdit.value = ""
 		else:
 			npyscreen.notify_confirm("Nie ma czego zapisac.", title="Blad dodawania rekordu")
 		self.parentApp.switchFormPrevious();
@@ -64,9 +71,8 @@ class AddRecordForm(npyscreen.ActionPopup):
 
 class RemoveRecordForm(npyscreen.ActionPopup):
 	ms = None
-	records = None
 	def create(self):
-		self.ms = self.add(npyscreen.TitleSelectOne, max_height=7, value = [0,], name="Wybierz rekord:", values = ['A','B','C'], scroll_exit=True)
+		self.ms = self.add(npyscreen.TitleSelectOne, max_height=7, value = [0,], name="Wybierz rekord:", scroll_exit=True)
 	def on_ok(self):
 		mainForm = self.parentApp.getForm('MAIN')
 		selectedRowIndex = self.ms.value[0]
