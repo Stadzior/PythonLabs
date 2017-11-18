@@ -7,24 +7,40 @@ class TestApp(npyscreen.NPSAppManaged):
 		self.addForm("MAIN", MainForm, name = "Zadanie 3",)
 
 class MainForm(npyscreen.ActionForm):
-
-	ml = None
 	ms = None
+	db = None
+	gd = None
 
 	def create(self):
-		self.ms = self.add(npyscreen.TitleSelectOne, max_height=7, value = [0,], name="Wybierz opcje:", values = ["Laduj baze z pliku","Zapisz baze do pliku", "Dodaj nowy wpis do bazy", "Usun wpis z bazy", "Wyswietl zawartosc bazy"], scroll_exit=True)
-		self.add(npyscreen.FixedText, value = """Wpisz liste imion i nazwisko oddzielonych przecinkiem!\n""")
-		self.ml = self.add(npyscreen.MultiLineEdit, max_height=5, rely=9)
-	
+		self.ms = self.add(npyscreen.TitleSelectOne, max_height=7, value = [0,], name="Wybierz opcje:", values = ["Laduj baze z pliku","Zapisz baze do pliku", "Dodaj nowy wpis do bazy", "Usun wpis z bazy"], scroll_exit=True)
+		self.gd = self.add(npyscreen.GridColTitles, relx = 20, rely=10, width=50, col_titles = ['Imie', 'Nazwisko'], select_whole_line=True)
+		self.gd.values = []
+		for x in range(36):
+			row = []
+			for y in range(x, x+36):
+				row.append(y)
+			self.gd.values.append(row)
+		self.gd.hidden = len(self.gd.values) == 0
 	def on_ok(self):
 		if self.ms.value[0] == 0:
 			try:
-				the_selected_file = npyscreen.selectFile()
+				with open(npyscreen.selectFile(),'r') as f:
+					content = f.readlines()
+				self.db = [x.strip().split(" ") for x in content]
 			except:
-				npyscreen.notify_confirm("Wybrany plik zawiera dane w nieobslugiwanym formacie", title="Blad ladowania bazy")
+				npyscreen.notify_confirm("Ladowanie bazy z pliku nie powiodlo sie.\n\n{}".format(str(e)), title="Blad ladowania bazy")
 		elif self.ms.value[0] == 1:
-			npyscreen.notify_confirm(self.buildMessageString(sorted(self.divideNames(self.ml.value), key=lambda x:x[1])))
-
+			try:
+				with open(npyscreen.selectFile(),'w') as f:
+					for row in self.db:
+						print('{} {}'.format(row[0],row[1]),file=f)
+			except Exception as e:
+				npyscreen.notify_confirm("Zapis bazy do pliku nie powiodl sie.\n\n{}".format(str(e)), title="Blad zapisu bazy")
+		elif self.ms.value[0] == 3:
+			selectedRowIndex = self.gd.edit_cell[0]
+			deletionConfirmed = npyscreen.notify_ok_cancel("Jestes pewny, ze chcesz usunac {} {} z bazy?".format(self.db[selectedRowIndex][0],self.db[selectedRowIndex][1]), title='Usuwanie wpisu z bazy')
+			if deletionConfirmed:
+				
 	def on_cancel(self):
 		exit()
 
@@ -37,10 +53,6 @@ class MainForm(npyscreen.ActionForm):
 			value = value.split(" ")
 			newList.append(value)
 		return newList	
-
-    #	def spawn_file_dialog(self):
-	#	the_selected_file = npyscreen.selectFile()
-	#	npyscreen.notify_wait('That returned: {}'.format(the_selected_file), title='results')	
 
 	def buildMessageString(self, names):
 		string = ""
