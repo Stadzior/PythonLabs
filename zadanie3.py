@@ -18,7 +18,10 @@ class MainForm(npyscreen.ActionForm):
 	
 	def on_ok(self):
 		if self.ms.value[0] == 0:
-			npyscreen.notify_confirm(self.buildMessageString(sorted(self.divideNames(self.ml.value), key=lambda x:x[0])))
+			try:
+				the_selected_file = npyscreen.selectFile()
+			except:
+				npyscreen.notify_confirm("Wybrany plik zawiera dane w nieobslugiwanym formacie", title="Blad ladowania bazy")
 		elif self.ms.value[0] == 1:
 			npyscreen.notify_confirm(self.buildMessageString(sorted(self.divideNames(self.ml.value), key=lambda x:x[1])))
 
@@ -33,7 +36,11 @@ class MainForm(npyscreen.ActionForm):
 			value = value.strip()
 			value = value.split(" ")
 			newList.append(value)
-		return newList
+		return newList	
+
+    #	def spawn_file_dialog(self):
+	#	the_selected_file = npyscreen.selectFile()
+	#	npyscreen.notify_wait('That returned: {}'.format(the_selected_file), title='results')	
 
 	def buildMessageString(self, names):
 		string = ""
