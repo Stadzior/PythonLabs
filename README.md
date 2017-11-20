@@ -26,3 +26,8 @@ Skrypt powinien obslugiwac:
 4) Usuwanie wpisow z "bazy danych".
 5) Wyswietlanie zawartosci "bazy danych".
 6) Wyswietlanie listy "opcji"
+
+## Zadanie3.1
+
+Do zadania 3 wykorzystac plik tekstowy z danymi w nastepujacym formacie:
+Imie(znak nie bedacy bialem znakiem lub litera)Nazwisko
