@@ -1,12 +1,12 @@
 # PythonLabs
 
-## Zadanie1
+## Zadanie 1
 Prosze napisac skrypt, ktory wyswietla 8 kolejnych poteg liczby 2 (zaczynajac
 od 2 do potegi 1), a nastepnie wczytuje 5 kolejnych poteg liczby 3 i sprawdza,
 czy uzytkownik podal poprawna wartosc przy kazdym kroku. Po wpisaniu zlej
 odpowiedzi program informuje o tym i konczy dzialanie (Nie pyta dalej!).
 
-## Zadanie2
+## Zadanie 2
 
 Wczytac od uzytkownika liczbe n. Wczytac od uzytkownika liste n imion i nazwisk (w jednej lini imie i nazwisko).
 Wyswietlic "menu":
@@ -16,7 +16,7 @@ Wyswietlic "menu":
 Wczytaj od uzytkownika wybor (1 lub 2) i wyswietlic odpowiednio posortowana
 liste.
 
-## Zadanie3
+## Zadanie 3
 
 Na bazie zadania 2 dodac do skryptu mozliwosc obslugi "bazy danych" w pliku.
 Skrypt powinien obslugiwac:
@@ -27,7 +27,7 @@ Skrypt powinien obslugiwac:
 5) Wyswietlanie zawartosci "bazy danych".
 6) Wyswietlanie listy "opcji"
 
-## Zadanie3.1
+## Zadanie 3.1
 
 Do zadania 3 wykorzystac plik tekstowy z danymi w nastepujacym formacie:
 Imie(znak nie bedacy bialem znakiem lub litera)Nazwisko
