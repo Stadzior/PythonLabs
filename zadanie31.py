@@ -1,6 +1,5 @@
 import npyscreen
 
-
 class TestApp(npyscreen.NPSAppManaged):
 
 	def onStart(self):
@@ -22,8 +21,9 @@ class MainForm(npyscreen.ActionForm):
 				self.db = []
 				with open(npyscreen.selectFile(),'r') as f:
 					content = f.readlines()
+				content = self.normalize_data(content)
 				for row in content:
-					self.db.append(row.strip().split(" "))
+					self.db.append(row.strip().split("#"))
 				self.refresh_grid()
 			except Exception as e:
 				npyscreen.notify_confirm("Ladowanie bazy z pliku nie powiodlo sie.\n\n{}".format(str(e)), title="Blad ladowania bazy")
@@ -31,7 +31,7 @@ class MainForm(npyscreen.ActionForm):
 			try:
 				with open(npyscreen.selectFile(),'w') as f:
 					for row in self.db:
-						print('{} {}'.format(row[0],row[1]),file=f)
+						print('{}#{}'.format(row[0],row[1]),file=f)
 			except Exception as e:
 				npyscreen.notify_confirm("Zapis bazy do pliku nie powiodl sie.\n\n{}".format(str(e)), title="Blad zapisu bazy")
 		elif self.ms.value[0] == 2:
@@ -47,6 +47,24 @@ class MainForm(npyscreen.ActionForm):
 		for row in self.db:
 			self.gd.values.append(row)
 		self.gd.hidden = len(self.gd.values) == 0
+	
+	def get_separator(self, row):
+		for char in row:
+			if not (char.isalpha() || char == '-'):
+				return char
+
+	def normalize_data(self, content):
+		for row in content:
+			separator = self.get_separator(row)
+			for i in range (1,len(row)):
+				char = row[i]
+				if not char.isalpha() && char != '-' && char != separator:
+					row = row.replace(char,'')
+				else:
+					prevChar = row[i-1]
+					if char == separator && prevChar == separator:
+						row = row[:i] + row[i:]
+							
 
 class AddRecordForm(npyscreen.ActionPopup):
 	nameTextEdit = None
