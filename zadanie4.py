@@ -1,9 +1,11 @@
 import npyscreen
+import urllib.request
+import re
 
 class TestApp(npyscreen.NPSAppManaged):
 
 	def onStart(self):
-		self.addForm("MAIN", MainForm, name = "Zadanie 3")
+		self.addForm("MAIN", MainForm, name = "Zadanie 4")
 		self.addForm("ADD", AddRecordForm, name = "Add new record")
 		self.addForm("REMOVE", RemoveRecordForm, name = "Remove record")
 
@@ -12,7 +14,7 @@ class MainForm(npyscreen.ActionForm):
 	db = None
 	gd = None
 	def create(self):
-		self.ms = self.add(npyscreen.TitleSelectOne, max_height=7, value = [0,], name="Wybierz opcje:", values = ["Laduj baze z pliku","Zapisz baze do pliku", "Dodaj nowy wpis do bazy", "Usun wpis z bazy"], scroll_exit=True)
+		self.ms = self.add(npyscreen.TitleSelectOne, max_height=7, value = [0,], name="Wybierz opcje:", values = ["Laduj baze z pliku","Zapisz baze do pliku", "Dodaj nowy wpis do bazy", "Usun wpis z bazy", "Laduj baze z url"], scroll_exit=True)
 		self.gd = self.add(npyscreen.GridColTitles, relx = 20, rely=10, width=50, col_titles = ['Imie', 'Nazwisko'])
 		self.gd.hidden = True
 	def on_ok(self):
@@ -38,6 +40,13 @@ class MainForm(npyscreen.ActionForm):
 		elif self.ms.value[0] == 3:
 			self.parentApp.getForm('REMOVE').ms.values = ['{} {}'.format(row[0],row[1]) for row in self.db] 
 			self.parentApp.switchForm('REMOVE')
+		elif self.ms.value[0] == 4:
+			url = 'http://mmajchr.kis.p.lodz.pl/pwjs/zadania/lista.txt'
+			response = urllib.request.urlopen(url)
+			text = response.read().decode('utf-8').replace(' ','')
+			text = re.sub('[0-9]+\)','\n',text)
+			self.ms.values[0] = text
+			
 	def on_cancel(self):
 		exit()
 	
