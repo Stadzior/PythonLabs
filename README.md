@@ -35,10 +35,10 @@ Imie(znak nie bedacy bialem znakiem lub litera)Nazwisko
 ## Zadanie 4
 Wczytac liste zdalnie z pliku lista.txt
 wymagania:
-    - import
-    - eksport
-    - konwersja
-    - podmenu
+- import
+- eksport
+- konwersja
+- podmenu
     
 ## Zadanie 4.1
 Prosze zapewnic mozliwosc rozroznienia w bazie nowych i starych rekordow (w
